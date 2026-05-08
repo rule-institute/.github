@@ -1,0 +1,5 @@
+# Reserved for future rule-institute-org CI scripts.
+#
+# For now, the description-length check (`check-skill-descriptions.sh`) lives
+# in swift-institute/.github/.github/scripts/ and is consumed cross-org.
+# Legal-domain-specific CI scripts would land here.

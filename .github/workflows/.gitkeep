@@ -1,0 +1,7 @@
+# Reserved for future rule-institute-org reusable workflows.
+#
+# For now, rule-institute consumer repos call swift-institute/.github reusables
+# directly cross-org (see Skills/.github/workflows/ci.yml as an example).
+# Workflows specific to legal-domain CI invariants would land here once the
+# need surfaces — keeping this dir as a placeholder so the repo structure
+# matches the swift-institute pattern.
