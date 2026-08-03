@@ -6,7 +6,8 @@ graphics (32×32 grid, `crispEdges` — sharp at every size).
 | File | Use |
 |------|-----|
 | `logo.svg` | The canonical mark, transparent background. Embeds, docs, derivations. |
-| `avatar.svg` | The mark on slate (`#464a5e`) with shadow — the org profile picture. GitHub's avatar uploader takes raster only: export to PNG at ≥500×500 before upload. |
+| `avatar.svg` | The mark on slate (`#464a5e`) with shadow — the org profile picture source. |
+| `avatar.png` | Canonical raster export (1024×1024) — GitHub's avatar uploader takes raster only; upload this file. |
 
 Core palette: outline `#121024` · golds `#f3c309` / `#dd981c` · ambers
 `#bf6a22` / `#924c24` · deep red `#901d0f` · pale gold `#efd978` · warm white
