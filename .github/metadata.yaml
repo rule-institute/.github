@@ -1,4 +1,80 @@
-# .github/metadata.yaml
+# .github/metadata.yaml — authored GitHub state for this repository.
+#
+# Read by swift-institute/.github's `sync-metadata` reusable, which this
+# repository thin-calls (see .github/workflows/sync-metadata-nightly.yml).
+#
+# TWO SEMANTICS THAT GOVERN HOW THIS FILE IS WRITTEN, both measured
+# against the upstream workflow on 2026-08-03 rather than assumed:
+#
+#  1. A repository with NO metadata.yaml is skipped entirely, not
+#     defaulted. Authoring this file is what places a repository under
+#     governance; deleting it removes the repository from governance
+#     without changing any live setting.
+#
+#  2. WITHIN this file, a `settings:` key left silent does NOT mean
+#     "leave the live value alone" — it converges to upstream's rule
+#     default, reverting any divergence. Silence is therefore an
+#     assertion, not an omission.
+#
+# Because of (2) this file declares every setting it is subject to, even
+# where the value equals the upstream default. The rule fleet's needs and
+# swift-institute's defaults currently agree on every one of them; that
+# agreement is a fact about today, not a guarantee, and writing the values
+# out means an upstream default change cannot silently become rule policy.
+#
+# This file is the reference exemplar for the rule fleet. Per-role
+# templates derived from it are tracked on rule-institute/.github#5.
+
 description: "Org profile + shared CI for rule-institute — the legal-domain counterpart to swift-institute"
+
+topics:
+  - legal-tech
+  - legal-encoding
+  - rule-institute
+  - swift
+
 readme:
   family: G
+
+settings:
+  # Repository surfaces. Issues carry all Institute work; discussions,
+  # wiki and projects are deliberately off — work is tracked in typed
+  # issues on the org project, and a second surface would fragment it.
+  hasIssuesEnabled: true
+  hasDiscussionsEnabled: false
+  hasWikiEnabled: false
+  hasProjectsEnabled: false
+  defaultBranch: main
+
+  # Merge policy: squash only, linear history, branch cleaned on merge.
+  allowMergeCommit: false
+  allowSquashMerge: true
+  allowRebaseMerge: false
+  deleteBranchOnMerge: true
+
+  # Secret scanning. Upstream applies this block ONLY to public
+  # repositories — a private target forces all four off and reports no
+  # divergence — so these values are live for this repository and inert
+  # for the (currently private) encoding fleet.
+  secretScanning: true
+  secretScanningPushProtection: true
+
+  # The two sub-features below are declared FALSE against intent.
+  #
+  # Both require GitHub Secret Protection (Advanced Security), which this
+  # plan does not include. GitHub answers the PATCH with HTTP 2xx and
+  # silently no-ops, so an authored `true` never converges: measured in
+  # wet run 30819187443 —
+  #   "sub-features did not take effect
+  #    (want np=enabled vc=enabled, got np=disabled vc=disabled)"
+  # — leaving 2 of 12 fields permanently divergent on every run.
+  #
+  # Permanent unresolvable divergence is worse than an inaccurate record:
+  # across a governed fleet it trains every reader to ignore sweep output,
+  # which defeats mechanical enforcement more thoroughly than having no
+  # sweep at all. So the declaration is made accurate to the entitlement
+  # and the intent is recorded here in prose instead: BOTH SHOULD BE TRUE
+  # if the entitlement is ever acquired, and this comment is the trigger
+  # to flip them. Tracked on rule-institute/.github#2.
+  secretScanningNonProviderPatterns: false
+  secretScanningValidityChecks: false
