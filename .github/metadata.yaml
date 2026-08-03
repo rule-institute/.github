@@ -76,5 +76,22 @@ settings:
   # and the intent is recorded here in prose instead: BOTH SHOULD BE TRUE
   # if the entitlement is ever acquired, and this comment is the trigger
   # to flip them. Tracked on rule-institute/.github#2.
+  #
+  # THESE TWO LINES ARE CURRENTLY INERT — swift-institute/.github#245.
+  # Upstream reads authored booleans as `.settings.x // <default>`, and
+  # jq's `//` cannot distinguish `false` from absent, so an authored
+  # `false` is silently read as `true` for every key whose default is
+  # `true`. Proven in dry run 30819738715: with both keys authored
+  # `false` below, the plan still proposed
+  #   `non_provider_patterns=true validity_checks=true`.
+  # There is no rule-side workaround — the coercion is in the read. The
+  # lines stay because they state the correct intent and will take effect
+  # unchanged once #245 lands; until then the 2-field divergence persists
+  # on this repository and on any public rule repository.
+  #
+  # Same defect makes `hasIssuesEnabled`, `allowSquashMerge` and
+  # `deleteBranchOnMerge` unexpressible as false fleet-wide. All three are
+  # authored true above, which is what the fleet wants, so nothing is
+  # currently masked by it here.
   secretScanningNonProviderPatterns: false
   secretScanningValidityChecks: false
