@@ -1,0 +1,16 @@
+{
+  "ecosystem": "rule-institute",
+  "repositories": [
+    {
+      "name": "burgerlijk-wetboek",
+      "organization": "swift-nl-wetgever",
+      "url": "https://github.com/swift-nl-wetgever/burgerlijk-wetboek.git"
+    },
+    {
+      "name": "burgerlijk-wetboek-boek-2",
+      "organization": "swift-nl-wetgever",
+      "url": "https://github.com/swift-nl-wetgever/burgerlijk-wetboek-boek-2.git"
+    }
+  ],
+  "version": 1
+}
