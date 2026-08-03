@@ -7,18 +7,55 @@
 # one reusable call per org. All sync logic lives upstream; this file owns
 # only enumeration, credentials, and scheduling.
 #
-# Scheduled 04:30 UTC — deliberately staggered off swift-institute's
-# 04:00 UTC nightly so the two institutes' sweep windows stay disjoint:
-# failures and rate anomalies are attributable to exactly one fleet's
-# sweep, and the two matrix fan-outs never load api.github.com
-# simultaneously. (API quota itself is per-installation and not shared;
-# the stagger is for attribution and burst separation.)
+# Scheduled 04:30 UTC. This is NOT a reliable non-overlap control against
+# swift-institute's nightly, and must not be read as one: six consecutive
+# observed upstream runs started at 06:18Z, 06:25Z, 06:36Z, 07:35Z and
+# 17:38Z (coordinator measurement, 2026-08-03) — GitHub's scheduler drifts
+# a cron by hours, so a 30-minute offset controls nothing. 04:30 is
+# retained only because it happens to precede the observed upstream band.
+# Genuine non-overlap, if ever required, needs a lock or a completion
+# signal, not a clock offset. API quota is per-INSTALLATION and not shared
+# between the two institutes' Apps, so overlap costs correctness nothing;
+# the only cost is attribution when reading two fleets' failures at once.
 #
 # Enumeration filter: EXPLICIT `select(.status=="active")`. The read-orgs
 # composite's automatic archived-pre-filter encodes swift-institute's
 # status vocabulary (active | archived) and does NOT narrow this
 # manifest's `reserved`/`frozen` records (measured 2026-08-03, recorded
 # on rule-institute/.github#2). Do not rely on the default filter here.
+#
+# SCOPE — two measured limits on what this driver can currently reach.
+# Both were established against run 30813931393 (2026-08-03); neither is
+# a defect in this file, and neither should be inferred away from a green.
+#
+#  1. VISIBILITY. The upstream per-org enumeration is hardcoded to
+#     `visibility=public` and exposes no input to change it. The rule
+#     encoding fleet is deliberately PRIVATE until the vertical proof and
+#     engine demo publish together (ratified anti-fork lever, Goal #1), so
+#     enumeration currently returns zero for it — measured verbatim:
+#     "Enumerated 0 repos from org 'swift-nl-wetgever'" against an org
+#     holding 1,060 private repositories. Upstream parameterization is
+#     required before this driver governs anything but rule-institute's
+#     own public repositories. NOTE this is a reach limit, not a cost
+#     limit: this driver runs in a PUBLIC repository (free standard
+#     runners) and mutates targets over the REST API, so sweeping private
+#     repositories consumes no Actions minutes and is unaffected by
+#     Actions being disabled inside them (swift-nl-wetgever org is
+#     `enabled_repositories: none`, deliberately, and stays that way —
+#     sync-metadata makes no actions/permissions calls at all).
+#
+#  2. OPT-IN GOVERNANCE. Upstream reads desired state from each target's
+#     own `.github/metadata.yaml` and SKIPS a repository that has none
+#     ("skipped (no .github/metadata.yaml)"). A repository is therefore
+#     governed by authoring intent into it, never by default. Sampling 12
+#     of swift-nl-wetgever's repositories on 2026-08-03 found exactly one
+#     with authored intent (burgerlijk-wetboek-boek-2). Consequence worth
+#     stating plainly: lifting the wet gate today would converge almost
+#     nothing, and the fleet's real governance work is AUTHORING, not
+#     sweeping. Beware the inverse though — WITHIN a metadata.yaml that
+#     does exist, a settings key left silent converges to upstream's rule
+#     default rather than leaving the live value alone, so authored files
+#     must declare every setting they care about.
 #
 # Credentials: rule-institute-bot (App ID 4471831), installed on all
 # governed rule orgs. The rule org secrets are mapped EXPLICITLY onto the
@@ -38,7 +75,22 @@
 # Pin honesty: `@main` references are floating per upstream's [CI-030]
 # active-dev pinning posture — the callee can change without this file
 # changing, so a past green here is evidence about the upstream code as
-# of that run only.
+# of that run only. Upstream changed these exact paths four times on
+# 2026-08-02 and again on 2026-08-03 (a4250a7, the #230/#212 peer
+# parameterization this driver depends on), so treat `@main` as moving.
+#
+# Floating is ACCEPTED here deliberately, and only because this driver
+# never converges wet unattended: the scheduled path is gated to dry-run
+# below. A dry run against a moved callee costs a re-run, not a fleet.
+# The pin is therefore deferred to the moment the wet gate lifts, and the
+# pin target is upstream's release TAG (expected 2026-09), not a SHA —
+# SHAs are meaningless while both institutes are pre-release.
+#
+# Where the pin will stop (measured 2026-08-03, not assumed): it does not
+# stop early. `sync-metadata.yml` checks out its own policy product with
+# `ref: ${{ job.workflow_sha }}`, so pinning the reusable also pins the
+# Swift repository-policy code it resolves at runtime. No separate
+# floating reference leaks past the workflow pin.
 
 name: sync-metadata-nightly
 
@@ -55,9 +107,39 @@ on:
         type: boolean
         required: false
         default: false
+      repo:
+        description: 'Single owner/name to converge instead of the fleet (manual use only; the fleet path is skipped when set).'
+        type: string
+        required: false
+        default: ''
 
 jobs:
+  # Single-repository mode — manual dispatch only, never scheduled.
+  #
+  # Exists so a wet convergence can be PROVEN on one owned repository
+  # before the fleet gate is ever lifted. The fleet dry run of 2026-08-03
+  # (run 30813931393) proved enumeration, credentials and fan-out, but
+  # proved nothing about convergence: it was structurally blind to the
+  # encoding fleet (see SCOPE below) and the only visible diff was this
+  # repository's own. Upstream has never had a green WET nightly either
+  # (swift-institute/.github#140), so single-repo mode is the smallest
+  # honest evidence that the wet path works at all.
+  single:
+    if: inputs.repo != ''
+    permissions:
+      contents: read
+    uses: swift-institute/.github/.github/workflows/sync-metadata.yml@main
+    with:
+      repo: ${{ inputs.repo }}
+      # No wet gate here: blast radius is the one named repository, and a
+      # manual dispatch is a deliberate act. The gate guards the FLEET.
+      dry-run: ${{ inputs.dry-run }}
+    secrets:
+      SWIFT_INSTITUTE_BOT_APP_CLIENT_ID: ${{ secrets.RULE_INSTITUTE_BOT_APP_CLIENT_ID }}
+      SWIFT_INSTITUTE_BOT_APP_PRIVATE_KEY: ${{ secrets.RULE_INSTITUTE_BOT_APP_PRIVATE_KEY }}
+
   config:
+    if: inputs.repo == ''
     runs-on: ubuntu-latest
     timeout-minutes: 20
     permissions:
@@ -79,6 +161,7 @@ jobs:
           filter: 'select(.status=="active") | .name'
 
   sweep:
+    if: inputs.repo == ''
     needs: config
     strategy:
       fail-fast: false
