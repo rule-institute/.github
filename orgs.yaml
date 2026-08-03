@@ -661,6 +661,41 @@
   jurisdiction: nl
   status: active
 
+- name: be-rule-legal
+  role: application
+  jurisdiction: be
+  status: active
+
+- name: ch-rule-legal
+  role: application
+  jurisdiction: ch
+  status: active
+
+- name: de-rule-legal
+  role: application
+  jurisdiction: de
+  status: active
+
+- name: eu-rule-legal
+  role: application
+  jurisdiction: eu
+  status: active
+
+- name: fr-rule-legal
+  role: application
+  jurisdiction: fr
+  status: active
+
+- name: gb-rule-legal
+  role: application
+  jurisdiction: gb
+  status: active
+
+- name: us-rule-legal
+  role: application
+  jurisdiction: us
+  status: active
+
 # ── reserved names (never residences) ─────────────────────────────────
 - name: rule-primitives
   role: reserved
