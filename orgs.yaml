@@ -145,6 +145,141 @@
   jurisdiction: de
   status: active
 
+- name: at-rule-law
+  role: composition
+  jurisdiction: at
+  status: active
+
+- name: bg-rule-law
+  role: composition
+  jurisdiction: bg
+  status: active
+
+- name: ch-rule-law
+  role: composition
+  jurisdiction: ch
+  status: active
+
+- name: cy-rule-law
+  role: composition
+  jurisdiction: cy
+  status: active
+
+- name: cz-rule-law
+  role: composition
+  jurisdiction: cz
+  status: active
+
+- name: dk-rule-law
+  role: composition
+  jurisdiction: dk
+  status: active
+
+- name: ee-rule-law
+  role: composition
+  jurisdiction: ee
+  status: active
+
+- name: es-rule-law
+  role: composition
+  jurisdiction: es
+  status: active
+
+- name: fi-rule-law
+  role: composition
+  jurisdiction: fi
+  status: active
+
+- name: fr-rule-law
+  role: composition
+  jurisdiction: fr
+  status: active
+
+- name: gb-rule-law
+  role: composition
+  jurisdiction: gb
+  status: active
+
+- name: gr-rule-law
+  role: composition
+  jurisdiction: gr
+  status: active
+
+- name: hr-rule-law
+  role: composition
+  jurisdiction: hr
+  status: active
+
+- name: hu-rule-law
+  role: composition
+  jurisdiction: hu
+  status: active
+
+- name: ie-rule-law
+  role: composition
+  jurisdiction: ie
+  status: active
+
+- name: it-rule-law
+  role: composition
+  jurisdiction: it
+  status: active
+
+- name: lt-rule-law
+  role: composition
+  jurisdiction: lt
+  status: active
+
+- name: lu-rule-law
+  role: composition
+  jurisdiction: lu
+  status: active
+
+- name: lv-rule-law
+  role: composition
+  jurisdiction: lv
+  status: active
+
+- name: mt-rule-law
+  role: composition
+  jurisdiction: mt
+  status: active
+
+- name: no-rule-law
+  role: composition
+  jurisdiction: no
+  status: active
+
+- name: pl-rule-law
+  role: composition
+  jurisdiction: pl
+  status: active
+
+- name: pt-rule-law
+  role: composition
+  jurisdiction: pt
+  status: active
+
+- name: ro-rule-law
+  role: composition
+  jurisdiction: ro
+  status: active
+
+- name: se-rule-law
+  role: composition
+  jurisdiction: se
+  status: active
+
+- name: si-rule-law
+  role: composition
+  jurisdiction: si
+  status: active
+
+- name: sk-rule-law
+  role: composition
+  jurisdiction: sk
+  status: active
+
 # ── application ───────────────────────────────────────────────────────
 - name: rule-legal
   role: application
