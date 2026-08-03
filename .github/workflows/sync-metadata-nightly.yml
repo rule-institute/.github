@@ -1,0 +1,99 @@
+# sync-metadata-nightly.yml — nightly rule-fleet metadata sweep.
+#
+# Thin rule-institute driver over swift-institute/.github's public per-org
+# reusable `sync-metadata.yml`: config job enumerates the rule org
+# population from THIS repository's root `orgs.yaml` via the read-orgs
+# composite (swift-institute/.github#212 parameterization), then fans out
+# one reusable call per org. All sync logic lives upstream; this file owns
+# only enumeration, credentials, and scheduling.
+#
+# Scheduled 04:30 UTC — deliberately staggered off swift-institute's
+# 04:00 UTC nightly so the two institutes' sweep windows stay disjoint:
+# failures and rate anomalies are attributable to exactly one fleet's
+# sweep, and the two matrix fan-outs never load api.github.com
+# simultaneously. (API quota itself is per-installation and not shared;
+# the stagger is for attribution and burst separation.)
+#
+# Enumeration filter: EXPLICIT `select(.status=="active")`. The read-orgs
+# composite's automatic archived-pre-filter encodes swift-institute's
+# status vocabulary (active | archived) and does NOT narrow this
+# manifest's `reserved`/`frozen` records (measured 2026-08-03, recorded
+# on rule-institute/.github#2). Do not rely on the default filter here.
+#
+# Credentials: rule-institute-bot (App ID 4471831), installed on all
+# governed rule orgs. The rule org secrets are mapped EXPLICITLY onto the
+# reusable's declared SWIFT_INSTITUTE_BOT_APP_* slots — those are the
+# callee's binding names, not an assertion about whose App runs;
+# `secrets: inherit` does not cross the org boundary.
+#
+# WET-RUN GATE: scheduled runs are forced to dry-run below until the
+# principal reviews the first dry-run plan (rule-institute/.github#2) and
+# lifts the gate by deleting the `|| github.event_name == 'schedule'`
+# clause. A workflow_dispatch follows its `dry-run` input as usual.
+# Ruleset convergence (`apply-rulesets`, `heal-rulesets`) stays at the
+# upstream default (false): the rule fleet carries no Institute rulesets
+# yet, and first application is a deliberate act, never a nightly side
+# effect.
+#
+# Pin honesty: `@main` references are floating per upstream's [CI-030]
+# active-dev pinning posture — the callee can change without this file
+# changing, so a past green here is evidence about the upstream code as
+# of that run only.
+
+name: sync-metadata-nightly
+
+# Deny-all floor; per-job blocks below declare the actual grants.
+permissions: {}
+
+on:
+  schedule:
+    - cron: '30 4 * * *'   # daily 04:30 UTC (staggered; see header)
+  workflow_dispatch:
+    inputs:
+      dry-run:
+        description: 'Preview edits without applying.'
+        type: boolean
+        required: false
+        default: false
+
+jobs:
+  config:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    outputs:
+      orgs: ${{ steps.read.outputs.orgs }}
+    steps:
+      - name: Harden runner (audit-mode egress logging)
+        uses: step-security/harden-runner@bf7454d06d71f1098171f2acdf0cd4708d7b5920 # v2.20.0
+        with:
+          egress-policy: audit
+
+      - id: read
+        uses: swift-institute/.github/.github/actions/read-orgs@main
+        with:
+          manifest-repository: rule-institute/.github
+          # Explicit status filter — see header. reserved/frozen orgs are
+          # not swept.
+          filter: 'select(.status=="active") | .name'
+
+  sweep:
+    needs: config
+    strategy:
+      fail-fast: false
+      matrix:
+        org: ${{ fromJSON(needs.config.outputs.orgs) }}
+    # Caller must grant equivalent or greater than the called reusable's
+    # per-job permissions (sync-metadata.yml `sync` and `surfaces` jobs:
+    # contents: read).
+    permissions:
+      contents: read
+    uses: swift-institute/.github/.github/workflows/sync-metadata.yml@main
+    with:
+      org: ${{ matrix.org }}
+      # WET-RUN GATE — see header before touching this expression.
+      dry-run: ${{ inputs.dry-run || github.event_name == 'schedule' }}
+    secrets:
+      SWIFT_INSTITUTE_BOT_APP_CLIENT_ID: ${{ secrets.RULE_INSTITUTE_BOT_APP_CLIENT_ID }}
+      SWIFT_INSTITUTE_BOT_APP_PRIVATE_KEY: ${{ secrets.RULE_INSTITUTE_BOT_APP_PRIVATE_KEY }}
