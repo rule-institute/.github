@@ -72,6 +72,26 @@
 # yet, and first application is a deliberate act, never a nightly side
 # effect.
 #
+# SINGLE-REPO PROOF, EXPLICIT VISIBILITY INPUTS (2026-08-03, thin-caller
+# proof lane of coordinator session 09363bfe): the `single` job below now
+# passes `visibility: 'all'` and `exclude-archived: false` explicitly,
+# exercising the declared input surface swift-institute/.github#244 added
+# (landed f609af6 via #249) rather than relying on the upstream default
+# (`public`). These two inputs are workflow_call `inputs:` — parsed by
+# the Actions runtime's own boolean/string typing — and are UNRELATED to
+# the metadata.yaml settings-read coercion bug (#245, `.settings.x //
+# <default>` reading an authored `false` as absent-then-true); #245 is
+# about the SETTINGS this workflow converges, not the CALL that invokes
+# it, and no metadata.yaml authored here relies on a `false` being
+# honored. In `repo:` scope the two inputs are a documented no-op (the
+# named repository is targeted directly; there is no enumeration to
+# filter), so this run proves the call succeeds through the new
+# interface without changing single-repo semantics. The FLEET path
+# (`sweep`, below) is deliberately left on the upstream default here —
+# lifting it to `visibility: 'all'` is the real #244 consumption and is
+# out of scope for this proof (single-repo mode only; fleet wet gates
+# stay closed per #2 and #9).
+#
 # Pin honesty: `@main` references are floating per upstream's [CI-030]
 # active-dev pinning posture — the callee can change without this file
 # changing, so a past green here is evidence about the upstream code as
@@ -134,6 +154,16 @@ jobs:
       # No wet gate here: blast radius is the one named repository, and a
       # manual dispatch is a deliberate act. The gate guards the FLEET.
       dry-run: ${{ inputs.dry-run }}
+      # EXPLICIT visibility inputs (swift-institute/.github#244, landed
+      # f609af6 via #249). No-op in `repo:` scope (there is no
+      # enumeration to filter — the named repo is targeted directly
+      # regardless of its own visibility), but wired through here so this
+      # call exercises the new declared surface rather than silently
+      # relying on the upstream default. `all` and `false` are the values
+      # the FLEET path below would need for the private encoding orgs;
+      # matching them here keeps the two calls' posture legible together.
+      visibility: 'all'
+      exclude-archived: false
     secrets:
       SWIFT_INSTITUTE_BOT_APP_CLIENT_ID: ${{ secrets.RULE_INSTITUTE_BOT_APP_CLIENT_ID }}
       SWIFT_INSTITUTE_BOT_APP_PRIVATE_KEY: ${{ secrets.RULE_INSTITUTE_BOT_APP_PRIVATE_KEY }}
