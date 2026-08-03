@@ -1,0 +1,173 @@
+# Canonical Rule Institute ecosystem orgs manifest.
+#
+# Single source of truth for the org list consumed by rule-institute
+# cross-org sweep workflows (thin callers of swift-institute/.github
+# reusable workflows; consumption mechanism tracked in
+# swift-institute/.github#212). Peer of, and disjoint from,
+# swift-institute's own manifest per the 2026-07-28 peer-institute ruling:
+# no org appears in both, and swift-institute-bot is never installed here.
+#
+# Schema:
+#   - name:         GitHub org slug (kebab-case)
+#     role:         meta | raw | composition | application | reserved
+#     jurisdiction: big-endian ISO 3166 token (nl, eu, us, us-nv, ...) or null
+#     status:       active | reserved | frozen
+#
+# role per the rule-architecture skill (rule-institute/Skills):
+#   meta         — institute meta repos (control plane, Skills, Internal)
+#   raw          — authority encoding orgs, Apache-2.0
+#   composition  — engine + per-jurisdiction composition, AGPL-3.0-only + commercial
+#   application  — closed products
+#   reserved     — defensively held name, never a residence
+#
+# status:
+#   active   — governed and swept
+#   reserved — exists to hold the name; profile only, no packages
+#   frozen   — content pending migration/disposition; excluded from sweeps
+#              (see rule-institute/Internal#2 for dispositions)
+#
+# Adding an org: append a record here after the org exists and carries its
+# day-one profile. Orgs approved for deletion are removed from this file at
+# deletion, not marked.
+
+# ── meta ──────────────────────────────────────────────────────────────
+- name: rule-institute
+  role: meta
+  jurisdiction: null
+  status: active
+
+# ── raw authority orgs ────────────────────────────────────────────────
+- name: swift-nl-wetgever
+  role: raw
+  jurisdiction: nl
+  status: active
+
+- name: swift-nl-hoge-raad
+  role: raw
+  jurisdiction: nl
+  status: active
+
+- name: swift-eu-legislature
+  role: raw
+  jurisdiction: eu
+  status: active
+
+- name: swift-eu-commission
+  role: raw
+  jurisdiction: eu
+  status: active
+
+- name: swift-eu-cjeu
+  role: raw
+  jurisdiction: eu
+  status: active
+
+- name: swift-us-legislature
+  role: raw
+  jurisdiction: us
+  status: active
+
+- name: swift-us-judiciary
+  role: raw
+  jurisdiction: us
+  status: active
+
+- name: swift-us-nv-legislature
+  role: raw
+  jurisdiction: us-nv
+  status: active
+
+- name: swift-us-nv-judiciary
+  role: raw
+  jurisdiction: us-nv
+  status: active
+
+- name: swift-us-de-legislature
+  role: raw
+  jurisdiction: us-de
+  status: active
+
+- name: swift-us-de-judiciary
+  role: raw
+  jurisdiction: us-de
+  status: active
+
+# frozen pending migration to the grammar-correct authority org
+# (rule-institute/Internal#2)
+- name: swift-eu-legislation
+  role: raw
+  jurisdiction: eu
+  status: frozen
+
+- name: swift-law
+  role: raw
+  jurisdiction: null
+  status: frozen
+
+# ── composition ───────────────────────────────────────────────────────
+- name: rule-law
+  role: composition
+  jurisdiction: null
+  status: active
+
+- name: nl-rule-law
+  role: composition
+  jurisdiction: nl
+  status: active
+
+- name: eu-rule-law
+  role: composition
+  jurisdiction: eu
+  status: active
+
+- name: us-rule-law
+  role: composition
+  jurisdiction: us
+  status: active
+
+- name: us-nv-rule-law
+  role: composition
+  jurisdiction: us-nv
+  status: active
+
+- name: us-de-rule-law
+  role: composition
+  jurisdiction: us-de
+  status: active
+
+- name: be-rule-law
+  role: composition
+  jurisdiction: be
+  status: active
+
+- name: de-rule-law
+  role: composition
+  jurisdiction: de
+  status: active
+
+# ── application ───────────────────────────────────────────────────────
+- name: rule-legal
+  role: application
+  jurisdiction: null
+  status: active
+
+- name: nl-rule-legal
+  role: application
+  jurisdiction: nl
+  status: active
+
+# ── reserved names (never residences) ─────────────────────────────────
+- name: rule-primitives
+  role: reserved
+  jurisdiction: null
+  status: reserved
+
+- name: rule-standards
+  role: reserved
+  jurisdiction: null
+  status: reserved
+
+- name: rule-foundations
+  role: reserved
+  jurisdiction: null
+  status: reserved
