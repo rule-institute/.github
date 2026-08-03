@@ -1,5 +1,3 @@
-<p align="center"><img src="https://raw.githubusercontent.com/rule-institute/.github/main/brand/avatar.svg" width="128" alt="Rule Institute — the golden ring"></p>
-
 # Rule Institute
 
 A layered legal-encoding ecosystem — the legal-domain peer of
