@@ -280,6 +280,216 @@
   jurisdiction: sk
   status: active
 
+- name: us-ak-rule-law
+  role: composition
+  jurisdiction: us-ak
+  status: active
+
+- name: us-al-rule-law
+  role: composition
+  jurisdiction: us-al
+  status: active
+
+- name: us-ar-rule-law
+  role: composition
+  jurisdiction: us-ar
+  status: active
+
+- name: us-az-rule-law
+  role: composition
+  jurisdiction: us-az
+  status: active
+
+- name: us-ca-rule-law
+  role: composition
+  jurisdiction: us-ca
+  status: active
+
+- name: us-co-rule-law
+  role: composition
+  jurisdiction: us-co
+  status: active
+
+- name: us-ct-rule-law
+  role: composition
+  jurisdiction: us-ct
+  status: active
+
+- name: us-dc-rule-law
+  role: composition
+  jurisdiction: us-dc
+  status: active
+
+- name: us-fl-rule-law
+  role: composition
+  jurisdiction: us-fl
+  status: active
+
+- name: us-ga-rule-law
+  role: composition
+  jurisdiction: us-ga
+  status: active
+
+- name: us-hi-rule-law
+  role: composition
+  jurisdiction: us-hi
+  status: active
+
+- name: us-ia-rule-law
+  role: composition
+  jurisdiction: us-ia
+  status: active
+
+- name: us-id-rule-law
+  role: composition
+  jurisdiction: us-id
+  status: active
+
+- name: us-il-rule-law
+  role: composition
+  jurisdiction: us-il
+  status: active
+
+- name: us-in-rule-law
+  role: composition
+  jurisdiction: us-in
+  status: active
+
+- name: us-ks-rule-law
+  role: composition
+  jurisdiction: us-ks
+  status: active
+
+- name: us-ky-rule-law
+  role: composition
+  jurisdiction: us-ky
+  status: active
+
+- name: us-la-rule-law
+  role: composition
+  jurisdiction: us-la
+  status: active
+
+- name: us-ma-rule-law
+  role: composition
+  jurisdiction: us-ma
+  status: active
+
+- name: us-md-rule-law
+  role: composition
+  jurisdiction: us-md
+  status: active
+
+- name: us-me-rule-law
+  role: composition
+  jurisdiction: us-me
+  status: active
+
+- name: us-mi-rule-law
+  role: composition
+  jurisdiction: us-mi
+  status: active
+
+- name: us-mn-rule-law
+  role: composition
+  jurisdiction: us-mn
+  status: active
+
+- name: us-mo-rule-law
+  role: composition
+  jurisdiction: us-mo
+  status: active
+
+- name: us-ms-rule-law
+  role: composition
+  jurisdiction: us-ms
+  status: active
+
+- name: us-mt-rule-law
+  role: composition
+  jurisdiction: us-mt
+  status: active
+
+- name: us-nc-rule-law
+  role: composition
+  jurisdiction: us-nc
+  status: active
+
+- name: us-nd-rule-law
+  role: composition
+  jurisdiction: us-nd
+  status: active
+
+- name: us-ne-rule-law
+  role: composition
+  jurisdiction: us-ne
+  status: active
+
+- name: us-nh-rule-law
+  role: composition
+  jurisdiction: us-nh
+  status: active
+
+- name: us-nj-rule-law
+  role: composition
+  jurisdiction: us-nj
+  status: active
+
+- name: us-nm-rule-law
+  role: composition
+  jurisdiction: us-nm
+  status: active
+
+- name: us-ny-rule-law
+  role: composition
+  jurisdiction: us-ny
+  status: active
+
+- name: us-oh-rule-law
+  role: composition
+  jurisdiction: us-oh
+  status: active
+
+- name: us-ok-rule-law
+  role: composition
+  jurisdiction: us-ok
+  status: active
+
+- name: us-or-rule-law
+  role: composition
+  jurisdiction: us-or
+  status: active
+
+- name: us-pa-rule-law
+  role: composition
+  jurisdiction: us-pa
+  status: active
+
+- name: us-ri-rule-law
+  role: composition
+  jurisdiction: us-ri
+  status: active
+
+- name: us-sc-rule-law
+  role: composition
+  jurisdiction: us-sc
+  status: active
+
+- name: us-sd-rule-law
+  role: composition
+  jurisdiction: us-sd
+  status: active
+
+- name: us-tn-rule-law
+  role: composition
+  jurisdiction: us-tn
+  status: active
+
+- name: us-tx-rule-law
+  role: composition
+  jurisdiction: us-tx
+  status: active
+
 # ── application ───────────────────────────────────────────────────────
 - name: rule-legal
   role: application
