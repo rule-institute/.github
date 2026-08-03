@@ -490,6 +490,166 @@
   jurisdiction: us-tx
   status: active
 
+- name: ae-rule-law
+  role: composition
+  jurisdiction: ae
+  status: active
+
+- name: ar-rule-law
+  role: composition
+  jurisdiction: ar
+  status: active
+
+- name: au-rule-law
+  role: composition
+  jurisdiction: au
+  status: active
+
+- name: br-rule-law
+  role: composition
+  jurisdiction: br
+  status: active
+
+- name: ca-rule-law
+  role: composition
+  jurisdiction: ca
+  status: active
+
+- name: cl-rule-law
+  role: composition
+  jurisdiction: cl
+  status: active
+
+- name: cn-rule-law
+  role: composition
+  jurisdiction: cn
+  status: active
+
+- name: co-rule-law
+  role: composition
+  jurisdiction: co
+  status: active
+
+- name: cr-rule-law
+  role: composition
+  jurisdiction: cr
+  status: active
+
+- name: hk-rule-law
+  role: composition
+  jurisdiction: hk
+  status: active
+
+- name: id-rule-law
+  role: composition
+  jurisdiction: id
+  status: active
+
+- name: il-rule-law
+  role: composition
+  jurisdiction: il
+  status: active
+
+- name: in-rule-law
+  role: composition
+  jurisdiction: in
+  status: active
+
+- name: is-rule-law
+  role: composition
+  jurisdiction: is
+  status: active
+
+- name: jp-rule-law
+  role: composition
+  jurisdiction: jp
+  status: active
+
+- name: kr-rule-law
+  role: composition
+  jurisdiction: kr
+  status: active
+
+- name: li-rule-law
+  role: composition
+  jurisdiction: li
+  status: active
+
+- name: mx-rule-law
+  role: composition
+  jurisdiction: mx
+  status: active
+
+- name: nz-rule-law
+  role: composition
+  jurisdiction: nz
+  status: active
+
+- name: ru-rule-law
+  role: composition
+  jurisdiction: ru
+  status: active
+
+- name: sa-rule-law
+  role: composition
+  jurisdiction: sa
+  status: active
+
+- name: sg-rule-law
+  role: composition
+  jurisdiction: sg
+  status: active
+
+- name: th-rule-law
+  role: composition
+  jurisdiction: th
+  status: active
+
+- name: tr-rule-law
+  role: composition
+  jurisdiction: tr
+  status: active
+
+- name: us-ut-rule-law
+  role: composition
+  jurisdiction: us-ut
+  status: active
+
+- name: us-va-rule-law
+  role: composition
+  jurisdiction: us-va
+  status: active
+
+- name: us-vt-rule-law
+  role: composition
+  jurisdiction: us-vt
+  status: active
+
+- name: us-wa-rule-law
+  role: composition
+  jurisdiction: us-wa
+  status: active
+
+- name: us-wi-rule-law
+  role: composition
+  jurisdiction: us-wi
+  status: active
+
+- name: us-wv-rule-law
+  role: composition
+  jurisdiction: us-wv
+  status: active
+
+- name: us-wy-rule-law
+  role: composition
+  jurisdiction: us-wy
+  status: active
+
+- name: za-rule-law
+  role: composition
+  jurisdiction: za
+  status: active
+
 # ── application ───────────────────────────────────────────────────────
 - name: rule-legal
   role: application
